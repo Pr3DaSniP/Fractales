@@ -15,6 +15,8 @@ Les fractales disponibles sont les suivantes :
 - Mandelbrot
 - Julia
 - Burning Ship
+- Tricorn
+- Multibrot
 
 ## Commandes
 
@@ -25,21 +27,133 @@ Les fractales disponibles sont les suivantes :
 
 ### Mandelbrot
 
-|                              Original                               |                              Gold                               |                              Fire                               |                              Electric                               |
-| :-----------------------------------------------------------------: | :-------------------------------------------------------------: | :-------------------------------------------------------------: | :-----------------------------------------------------------------: |
-| ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_original.png) | ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_gold.png) | ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_fire.png) | ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_electric.png) |
+|                              Original                               |
+| :-----------------------------------------------------------------: |
+| ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_original.png) |
+
+|                              Gold                               |
+| :-------------------------------------------------------------: |
+| ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_gold.png) |
+
+|                              Fire                               |
+| :-------------------------------------------------------------: |
+| ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_fire.png) |
+
+|                              Electric                               |
+| :-----------------------------------------------------------------: |
+| ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_electric.png) |
+
+|                              Verdoyante                               |
+| :-------------------------------------------------------------------: |
+| ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_verdoyante.png) |
+
+|                              Perle                               |
+| :--------------------------------------------------------------: |
+| ![Mandelbrot](Fractales/Assets/mandelbrots/mandelbrot_perle.png) |
 
 ### Julia
 
-|                       Original                       |                       Gold                       |                       Fire                       |                       Electric                       |
-| :--------------------------------------------------: | :----------------------------------------------: | :----------------------------------------------: | :--------------------------------------------------: |
-| ![Julia](Fractales/Assets/julias/julia_original.png) | ![Julia](Fractales/Assets/julias/julia_gold.png) | ![Julia](Fractales/Assets/julias/julia_fire.png) | ![Julia](Fractales/Assets/julias/julia_electric.png) |
+|                       Original                       |
+| :--------------------------------------------------: |
+| ![Julia](Fractales/Assets/julias/julia_original.png) |
+
+|                       Gold                       |
+| :----------------------------------------------: |
+| ![Julia](Fractales/Assets/julias/julia_gold.png) |
+
+|                       Fire                       |
+| :----------------------------------------------: |
+| ![Julia](Fractales/Assets/julias/julia_fire.png) |
+
+|                       Electric                       |
+| :--------------------------------------------------: |
+| ![Julia](Fractales/Assets/julias/julia_electric.png) |
+
+|                       Verdoyante                       |
+| :----------------------------------------------------: |
+| ![Julia](Fractales/Assets/julias/julia_verdoyante.png) |
+
+|                       Perle                       |
+| :-----------------------------------------------: |
+| ![Julia](Fractales/Assets/julias/julia_perle.png) |
 
 ### Burning Ship
 
-|                                Original                                 |                                Gold                                 |                                Fire                                 |                                Electric                                 |
-| :---------------------------------------------------------------------: | :-----------------------------------------------------------------: | :-----------------------------------------------------------------: | :---------------------------------------------------------------------: |
-| ![Burning Ship](Fractales/Assets/burningships/burningship_original.png) | ![Burning Ship](Fractales/Assets/burningships/burningship_gold.png) | ![Burning Ship](Fractales/Assets/burningships/burningship_fire.png) | ![Burning Ship](Fractales/Assets/burningships/burningship_electric.png) |
+|                                Original                                 |
+| :---------------------------------------------------------------------: |
+| ![Burning Ship](Fractales/Assets/burningships/burningship_original.png) |
+
+|                                Gold                                 |
+| :-----------------------------------------------------------------: |
+| ![Burning Ship](Fractales/Assets/burningships/burningship_gold.png) |
+
+|                                Fire                                 |
+| :-----------------------------------------------------------------: |
+| ![Burning Ship](Fractales/Assets/burningships/burningship_fire.png) |
+
+|                                Electric                                 |
+| :---------------------------------------------------------------------: |
+| ![Burning Ship](Fractales/Assets/burningships/burningship_electric.png) |
+
+|                                Verdoyante                                 |
+| :-----------------------------------------------------------------------: |
+| ![Burning Ship](Fractales/Assets/burningships/burningship_verdoyante.png) |
+
+|                                Perle                                 |
+| :------------------------------------------------------------------: |
+| ![Burning Ship](Fractales/Assets/burningships/burningship_perle.png) |
+
+### Tricorn
+
+|                          Original                          |
+| :--------------------------------------------------------: |
+| ![Tricorn](Fractales/Assets/tricorns/tricorn_original.png) |
+
+|                          Gold                          |
+| :----------------------------------------------------: |
+| ![Tricorn](Fractales/Assets/tricorns/tricorn_gold.png) |
+
+|                          Fire                          |
+| :----------------------------------------------------: |
+| ![Tricorn](Fractales/Assets/tricorns/tricorn_fire.png) |
+
+|                          Electric                          |
+| :--------------------------------------------------------: |
+| ![Tricorn](Fractales/Assets/tricorns/tricorn_electric.png) |
+
+|                          Verdoyante                          |
+| :----------------------------------------------------------: |
+| ![Tricorn](Fractales/Assets/tricorns/tricorn_verdoyante.png) |
+
+|                          Perle                          |
+| :-----------------------------------------------------: |
+| ![Tricorn](Fractales/Assets/tricorns/tricorn_perle.png) |
+
+### Multibrot
+
+|                             Original                             |
+| :--------------------------------------------------------------: |
+| ![Multibrot](Fractales/Assets/multibrots/multibrot_original.png) |
+
+|                             Gold                             |
+| :----------------------------------------------------------: |
+| ![Multibrot](Fractales/Assets/multibrots/multibrot_gold.png) |
+
+|                             Fire                             |
+| :----------------------------------------------------------: |
+| ![Multibrot](Fractales/Assets/multibrots/multibrot_fire.png) |
+
+|                             Electric                             |
+| :--------------------------------------------------------------: |
+| ![Multibrot](Fractales/Assets/multibrots/multibrot_electric.png) |
+
+|                             Verdoyante                             |
+| :----------------------------------------------------------------: |
+| ![Multibrot](Fractales/Assets/multibrots/multibrot_verdoyante.png) |
+
+|                             Perle                             |
+| :-----------------------------------------------------------: |
+| ![Multibrot](Fractales/Assets/multibrots/multibrot_perle.png) |
 
 ## Crédits
 

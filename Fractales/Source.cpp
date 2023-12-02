@@ -25,7 +25,7 @@ struct Colors {
 		ImGui::NewLine();
 		ImGui::Text("Colors:");
 		ImGui::Combo("##color_pallet", &selectedPalette,
-			"Original\0Fire\0Electric\0Gold", 4);
+			"Original\0Fire\0Electric\0Gold\0Verdoyante\0Perle", 6);
 
 		fractales[selectedFractal]->setActiveShader(selectedPalette);
 	}
@@ -51,7 +51,6 @@ void resetRenderingShader() {
 
 int main()
 {
-
 	if (!glfwInit())
 		return -1;
 
@@ -108,7 +107,9 @@ int main()
 	fractales.push_back(new Mandelbrot());
 	fractales.push_back(new Julia());
 	fractales.push_back(new BurningShip());
-				
+	fractales.push_back(new Tricorn());
+	fractales.push_back(new Multibrot());
+
 	Application app{ screenWidth, screenHeight, "Fractales" };
 	app.Init(window, glsl_version);
 
@@ -125,6 +126,9 @@ int main()
 	// Si on appuie sur une touche du clavier
 	glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
+		if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+			glfwSetWindowShouldClose(window, true);
+
 		if (key == GLFW_KEY_R && action == GLFW_PRESS)
 			resetRenderingShader();
 

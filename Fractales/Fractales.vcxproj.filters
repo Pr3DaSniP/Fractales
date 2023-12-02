@@ -25,6 +25,12 @@
     <Filter Include="Shaders\BurningShip">
       <UniqueIdentifier>{6efb4824-3a5a-4029-adfa-8f557aaf2dcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Tricorns">
+      <UniqueIdentifier>{82ce9b84-88c2-4359-a001-18005c491355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Multibrot">
+      <UniqueIdentifier>{19c633ad-b6a0-4569-895b-cc73c64e62dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -108,6 +114,60 @@
     </None>
     <None Include="vertex.vs">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\tricorns\tricorn_Original.fs">
+      <Filter>Shaders\Tricorns</Filter>
+    </None>
+    <None Include="shaders\multibrots\multibrot_Original.fs">
+      <Filter>Shaders\Multibrot</Filter>
+    </None>
+    <None Include="shaders\multibrots\multibrot_Electric.fs">
+      <Filter>Shaders\Multibrot</Filter>
+    </None>
+    <None Include="shaders\multibrots\multibrot_Fire.fs">
+      <Filter>Shaders\Multibrot</Filter>
+    </None>
+    <None Include="shaders\multibrots\multibrot_Gold.fs">
+      <Filter>Shaders\Multibrot</Filter>
+    </None>
+    <None Include="shaders\tricorns\tricorn_Electric.fs">
+      <Filter>Shaders\Tricorns</Filter>
+    </None>
+    <None Include="shaders\tricorns\tricorn_Fire.fs">
+      <Filter>Shaders\Tricorns</Filter>
+    </None>
+    <None Include="shaders\tricorns\tricorn_Gold.fs">
+      <Filter>Shaders\Tricorns</Filter>
+    </None>
+    <None Include="shaders\mandelbrots\mandelbrot_Perle.fs">
+      <Filter>Shaders\Mandelbrots</Filter>
+    </None>
+    <None Include="shaders\mandelbrots\mandelbrot_Verdoyante.fs">
+      <Filter>Shaders\Mandelbrots</Filter>
+    </None>
+    <None Include="shaders\julias\julia_Perle.fs">
+      <Filter>Shaders\Julias</Filter>
+    </None>
+    <None Include="shaders\julias\julia_Verdoyante.fs">
+      <Filter>Shaders\Julias</Filter>
+    </None>
+    <None Include="shaders\burningships\burningship_Perle.fs">
+      <Filter>Shaders\BurningShip</Filter>
+    </None>
+    <None Include="shaders\burningships\burningship_Verdoyante.fs">
+      <Filter>Shaders\BurningShip</Filter>
+    </None>
+    <None Include="shaders\multibrots\multibrot_Perle.fs">
+      <Filter>Shaders\Multibrot</Filter>
+    </None>
+    <None Include="shaders\multibrots\multibrot_Verdoyante.fs">
+      <Filter>Shaders\Multibrot</Filter>
+    </None>
+    <None Include="shaders\tricorns\tricorn_Perle.fs">
+      <Filter>Shaders\Tricorns</Filter>
+    </None>
+    <None Include="shaders\tricorns\tricorn_Verdoyante.fs">
+      <Filter>Shaders\Tricorns</Filter>
     </None>
   </ItemGroup>
 </Project>

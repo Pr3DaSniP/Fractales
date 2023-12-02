@@ -29,20 +29,21 @@ float modulus_2(vec2 z)
 }
 
 // Color palette
-vec3[5] Electric() {
-	vec3 pallet[5];
-	pallet[0] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	0.f		/ 255.f);
-	pallet[1] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	200.f	/ 255.f);
-	pallet[2] = vec3(255.f	/ 255.f,	255.f	/ 255.f,	255.f	/ 255.f);
-	pallet[3] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	200.f	/ 255.f);
-	pallet[4] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	0.f		/ 255.f);
-	return pallet;
+vec3[6] Perle() {
+    vec3 pallet[6];
+    pallet[0] = vec3(10.f	/ 255.f,	9.f		/ 255.f,	12.f	/ 255.f);
+    pallet[1] = vec3(240.f	/ 255.f,	237.f	/ 255.f,	238.f	/ 255.f);
+    pallet[2] = vec3(7.f	/ 255.f,	57.f	/ 255.f,	60.f	/ 255.f);
+    pallet[3] = vec3(44.f	/ 255.f,	102.f	/ 255.f,	110.f	/ 255.f);
+    pallet[4] = vec3(144.f	/ 255.f,	221.f	/ 255.f,	240.f	/ 255.f);
+    pallet[5] = vec3(10.f	/ 255.f,	9.f		/ 255.f,	12.f	/ 255.f);
+    return pallet;
 }
 
 vec3 get_color(float iterations)
 {
-	int nbColors = 5;
-	vec3[5] pallet = Electric();
+	int nbColors = 6;
+	vec3[6] pallet = Perle();
 
 	float value = iterations / float(maxIter);
 	vec3 color = vec3(0);

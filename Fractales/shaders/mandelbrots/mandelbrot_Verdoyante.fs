@@ -2,7 +2,6 @@
 out vec4 FragColor;
 
 uniform float maxIter;
-uniform float time;
 uniform float mouseX;
 uniform float mouseY;
 uniform float zoom;
@@ -29,20 +28,21 @@ float modulus_2(vec2 z)
 }
 
 // Color palette
-vec3[5] Electric() {
+vec3[5] Verdoyante()
+{
 	vec3 pallet[5];
 	pallet[0] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	0.f		/ 255.f);
-	pallet[1] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	200.f	/ 255.f);
-	pallet[2] = vec3(255.f	/ 255.f,	255.f	/ 255.f,	255.f	/ 255.f);
-	pallet[3] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	200.f	/ 255.f);
-	pallet[4] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	0.f		/ 255.f);
+	pallet[1] = vec3(124.f	/ 255.f,	254.f	/ 255.f,	240.f	/ 255.f);
+	pallet[2] = vec3(107.f	/ 255.f,	255.f	/ 255.f,	184.f	/ 255.f);
+	pallet[3] = vec3(44.f	/ 255.f,	234.f	/ 255.f,	163.f	/ 255.f);
+	pallet[4] = vec3(40.f	/ 255.f,	150.f	/ 255.f,	90.f	/ 255.f);
 	return pallet;
 }
 
 vec3 get_color(float iterations)
 {
 	int nbColors = 5;
-	vec3[5] pallet = Electric();
+	vec3[5] pallet = Verdoyante();
 
 	float value = iterations / float(maxIter);
 	vec3 color = vec3(0);
@@ -86,7 +86,7 @@ vec3 mandelbrot(vec2 p)
 
     while (modulus_2(number) < max_mod && i < maxIter) 
     {
-        temp = abs(number);
+        temp = number;
         number.x = temp.x * temp.x - temp.y * temp.y + c.x;
         number.y = 2.0 * temp.x * temp.y + c.y;
         i++;
@@ -115,7 +115,7 @@ void main()
 {
     float zooming = 1.0;
     vec2 pos;
-	pos = (2.5*(gl_FragCoord.xy - 0.5 * vec2(width, height + 500)) / float(height)) / (zooming + zoom);
+	pos = (2.5*(gl_FragCoord.xy - 0.5 * vec2(width, height)) / float(height)) / (zooming + zoom);
     pos += vec2(-mouseX, mouseY);
 	vec3 col = mandelbrot(pos);
     FragColor = vec4(col,1);

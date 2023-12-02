@@ -2,7 +2,6 @@
 out vec4 FragColor;
 
 uniform float maxIter;
-uniform float time;
 uniform float mouseX;
 uniform float mouseY;
 uniform float zoom;

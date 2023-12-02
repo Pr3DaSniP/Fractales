@@ -10,13 +10,16 @@ void Fractale::Menu()
 	ImGui::NextColumn();
 	ImGui::RadioButton("Burning Ship", &selectedFractal, 2);
 	ImGui::NextColumn();
+	ImGui::RadioButton("Tricorn", &selectedFractal, 3);
+	ImGui::NextColumn();
+	ImGui::RadioButton("Multibrot", &selectedFractal, 4);
 	ImGui::Columns(1);
 
 	ImGui::NewLine();
 	ImGui::SliderInt("Iterations", &m_iterations, 20, 5000);
 
 	ImGui::NewLine();
-	ImGui::SliderFloat("Color Range", &m_colorRange, 0.01f, 10.f);
+	ImGui::SliderFloat("Color Range", &m_colorRange, 0.01f, 10.0f);
 
 	ImGui::Separator();
 	ImGui::Checkbox("Smooth", &m_smooth);
@@ -112,4 +115,66 @@ Shader* BurningShip::getShader()
 std::pair<float, float> BurningShip::getCoordsForZoom()
 {
 	return std::make_pair(-1.762, -0.02);
+}
+
+Tricorn::Tricorn() 
+{
+	m_id = 3;
+	m_iterations = 300;
+}
+
+void Tricorn::Render() 
+{
+	shaders[activeShader]->setBool("smooth_color", m_smooth);
+	shaders[activeShader]->setFloat("colorRange", m_colorRange);
+	shaders[activeShader]->setFloat("maxIter", m_iterations);
+	shaders[activeShader]->use();
+}
+
+void Tricorn::Menu() 
+{
+	Fractale::Menu();
+}
+
+Shader* Tricorn::getShader() 
+{
+	return shaders[activeShader];
+}
+
+std::pair<float, float> Tricorn::getCoordsForZoom() 
+{
+	return std::make_pair(-1.762, -0.02);
+}
+
+Multibrot::Multibrot() 
+{
+	m_id = 4;
+	m_iterations = 30;
+}
+
+void Multibrot::Render() 
+{
+	shaders[activeShader]->setBool("smooth_color", m_smooth);
+	shaders[activeShader]->setFloat("colorRange", m_colorRange);
+	shaders[activeShader]->setFloat("maxIter", m_iterations);
+	shaders[activeShader]->setInt("numberOfBrot", m_numberOfBrot);
+	shaders[activeShader]->use();
+}
+
+void Multibrot::Menu() 
+{
+	Fractale::Menu();
+	ImGui::NewLine();
+	ImGui::Text("Multibrot");
+	ImGui::SliderInt("Number of brot", &m_numberOfBrot, 1, 10);
+}
+
+Shader* Multibrot::getShader() 
+{
+	return shaders[activeShader];
+}
+
+std::pair<float, float> Multibrot::getCoordsForZoom() 
+{
+	return std::make_pair(0, 0);
 }
