@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{6fedb290-c768-491b-9fcd-10ea1f3603b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Mandelbrots">
+      <UniqueIdentifier>{0e445431-9d06-4b7c-83ad-8abd3209d79c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Julias">
+      <UniqueIdentifier>{73f02d38-ff17-4543-9e88-1f9ed303628f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\BurningShip">
+      <UniqueIdentifier>{6efb4824-3a5a-4029-adfa-8f557aaf2dcb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_glfw.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_opengl3.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Fractale.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_glfw.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_opengl3.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_opengl3_loader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="linmath.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Fractale.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\mandelbrots\mandelbrot_Electric.fs">
+      <Filter>Shaders\Mandelbrots</Filter>
+    </None>
+    <None Include="shaders\mandelbrots\mandelbrot_Fire.fs">
+      <Filter>Shaders\Mandelbrots</Filter>
+    </None>
+    <None Include="shaders\mandelbrots\mandelbrot_Original.fs">
+      <Filter>Shaders\Mandelbrots</Filter>
+    </None>
+    <None Include="shaders\mandelbrots\mandelbrot_Gold.fs">
+      <Filter>Shaders\Mandelbrots</Filter>
+    </None>
+    <None Include="shaders\julias\julia_Electric.fs">
+      <Filter>Shaders\Julias</Filter>
+    </None>
+    <None Include="shaders\julias\julia_Fire.fs">
+      <Filter>Shaders\Julias</Filter>
+    </None>
+    <None Include="shaders\julias\julia_Gold.fs">
+      <Filter>Shaders\Julias</Filter>
+    </None>
+    <None Include="shaders\julias\julia_Original.fs">
+      <Filter>Shaders\Julias</Filter>
+    </None>
+    <None Include="shaders\burningships\burningship_Electric.fs">
+      <Filter>Shaders\BurningShip</Filter>
+    </None>
+    <None Include="shaders\burningships\burningship_Fire.fs">
+      <Filter>Shaders\BurningShip</Filter>
+    </None>
+    <None Include="shaders\burningships\burningship_Gold.fs">
+      <Filter>Shaders\BurningShip</Filter>
+    </None>
+    <None Include="shaders\burningships\burningship_Original.fs">
+      <Filter>Shaders\BurningShip</Filter>
+    </None>
+    <None Include="vertex.vs">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
