@@ -43,4 +43,4 @@ Les fractales disponibles sont les suivantes :
 
 ## Crédits
 
-Je me suis aidé de la vidéo ainsi que du code de [Angel "Dimension" Angel](https://github.com/angeluriot/2D_fractals_generator).
+Je me suis aidé de la vidéo ainsi que du code de [Angel "Dimension" Uriot](https://github.com/angeluriot/2D_fractals_generator).
