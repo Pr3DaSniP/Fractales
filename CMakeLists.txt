@@ -70,6 +70,7 @@ target_link_libraries(imgui PUBLIC glfw glad_gl_core_33)
 # ---------------------------------------------------------------------------
 add_executable(fractales
     src/main.cpp
+    src/core/Shader.cpp
 )
 
 target_link_libraries(fractales PRIVATE

@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "core/Shader.h"
+
 int main()
 {
     if (!glfwInit())
@@ -36,6 +38,29 @@ int main()
 
     std::cout << "OpenGL charge : " << glGetString(GL_VERSION) << "\n";
 
+    // Test de la classe Shader : compile/link + dessine un quad plein
+    // écran teinté par un uniform, pour valider le pipeline complet
+    // (RAII, cache d'uniforms, attribute pointer) avant de migrer le
+    // reste du rendu de fractales.
+    Shader testShader("shaders/vertex.vs", "shaders/test.fs");
+
+    float quadVertices[] = {
+        -1.0f, -1.0f,
+         1.0f, -1.0f,
+        -1.0f,  1.0f,
+         1.0f,  1.0f,
+    };
+
+    GLuint vao, vbo;
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+    glBindVertexArray(vao);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
+    glBindVertexArray(0);
+
     while (!glfwWindowShouldClose(window))
     {
         int width, height;
@@ -45,9 +70,19 @@ int main()
         glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        testShader.use();
+        testShader.setVec3("testColor", 0.2f, 0.6f, 0.9f);
+        glBindVertexArray(vao);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        glBindVertexArray(0);
+        testShader.unuse();
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    glDeleteBuffers(1, &vbo);
+    glDeleteVertexArrays(1, &vao);
 
     glfwDestroyWindow(window);
     glfwTerminate();
