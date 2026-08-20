@@ -4,11 +4,12 @@ BurningShip::BurningShip()
 {
     m_id = 2;
     m_iterations = 300;
-    loadPaletteShaders("burningships", "burningship");
+    loadShader("burningship");
 }
 
 void BurningShip::render()
 {
+    applyPalette();
     shader().setBool("smooth_color", m_smooth);
     shader().setFloat("colorRange", m_colorRange);
     shader().setFloat("maxIter", static_cast<float>(m_iterations));

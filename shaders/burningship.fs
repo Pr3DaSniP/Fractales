@@ -2,7 +2,6 @@
 out vec4 FragColor;
 
 uniform float maxIter;
-uniform float time;
 uniform float mouseX;
 uniform float mouseY;
 uniform float zoom;
@@ -17,6 +16,10 @@ uniform float zoomFactor;
 uniform int width;
 uniform int height;
 
+#define MAX_PALETTE_SIZE 8
+uniform vec3 palette[MAX_PALETTE_SIZE];
+uniform int paletteSize;
+
 // Helpers
 float modulo(float a, float b)
 {
@@ -28,45 +31,30 @@ float modulus_2(vec2 z)
 	return z.x * z.x + z.y * z.y;
 }
 
-// Color palette
-vec3[5] Verdoyante()
-{
-	vec3 pallet[5];
-	pallet[0] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	0.f		/ 255.f);
-	pallet[1] = vec3(124.f	/ 255.f,	254.f	/ 255.f,	240.f	/ 255.f);
-	pallet[2] = vec3(107.f	/ 255.f,	255.f	/ 255.f,	184.f	/ 255.f);
-	pallet[3] = vec3(44.f	/ 255.f,	234.f	/ 255.f,	163.f	/ 255.f);
-	pallet[4] = vec3(40.f	/ 255.f,	150.f	/ 255.f,	90.f	/ 255.f);
-	return pallet;
-}
-
 vec3 get_color(float iterations)
 {
-	int nbColors = 5;
-	vec3[5] pallet = Verdoyante();
-
 	float value = iterations / float(maxIter);
 	vec3 color = vec3(0);
 
 	float min_value;
 	float max_value;
 
-	for (int i = 0; i < int(nbColors - 1); i++)
+	for (int i = 0; i < paletteSize - 1; i++)
 	{
-		min_value = float(i) / nbColors;
-		max_value = float(i + 1) / nbColors;
+		min_value = float(i) / float(paletteSize);
+		max_value = float(i + 1) / float(paletteSize);
 
 		if (value >= min_value && value <= max_value)
 		{
-			color = mix(pallet[i], pallet[i + 1], (value - min_value) * nbColors);
-            break;
+			color = mix(palette[i], palette[i + 1], (value - min_value) * float(paletteSize));
+			break;
 		}
 	}
 
 	return color;
 }
 
-vec3 mandelbrot(vec2 p) 
+vec3 mandelbrot(vec2 p)
 {
     vec2 number = vec2(0);
     vec2 c = vec2(0);
@@ -85,7 +73,7 @@ vec3 mandelbrot(vec2 p)
 
     float max_mod = smooth_color ? 1000.0 : 4.0;
 
-    while (modulus_2(number) < max_mod && i < maxIter) 
+    while (modulus_2(number) < max_mod && i < maxIter)
     {
         temp = abs(number);
         number.x = temp.x * temp.x - temp.y * temp.y + c.x;
@@ -102,7 +90,7 @@ vec3 mandelbrot(vec2 p)
         float value = mod(smooth_val, float(maxIter) / color_mod);
         color = get_color(value);
     }
-    else 
+    else
     {
         int shifted_i = i * int( maxIter / color_mod) % int(maxIter);
         float value = mod(float(shifted_i), float(maxIter) / color_mod);

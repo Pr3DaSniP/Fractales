@@ -4,11 +4,12 @@ Tricorn::Tricorn()
 {
     m_id = 3;
     m_iterations = 300;
-    loadPaletteShaders("tricorns", "tricorn");
+    loadShader("tricorn");
 }
 
 void Tricorn::render()
 {
+    applyPalette();
     shader().setBool("smooth_color", m_smooth);
     shader().setFloat("colorRange", m_colorRange);
     shader().setFloat("maxIter", static_cast<float>(m_iterations));

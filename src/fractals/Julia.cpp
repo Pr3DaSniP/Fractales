@@ -6,11 +6,12 @@ Julia::Julia()
 {
     m_id = 1;
     m_iterations = 150;
-    loadPaletteShaders("julias", "julia");
+    loadShader("julia");
 }
 
 void Julia::render()
 {
+    applyPalette();
     shader().setFloat("maxIter", static_cast<float>(m_iterations));
     shader().setBool("smooth_color", m_smooth);
     shader().setFloat("colorRange", m_colorRange);

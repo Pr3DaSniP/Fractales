@@ -6,11 +6,12 @@ Multibrot::Multibrot()
 {
     m_id = 4;
     m_iterations = 30;
-    loadPaletteShaders("multibrots", "multibrot");
+    loadShader("multibrot");
 }
 
 void Multibrot::render()
 {
+    applyPalette();
     shader().setBool("smooth_color", m_smooth);
     shader().setFloat("colorRange", m_colorRange);
     shader().setFloat("maxIter", static_cast<float>(m_iterations));

@@ -16,50 +16,27 @@ uniform float zoomFactor;
 uniform int width;
 uniform int height;
 
-float conjug(float x, float y)
-{
-	return x*x - y*y;
-}
-
-float puissance(float x, float n)
-{
-	float res = 1.0;
-	for(int i = 0; i < n; i++)
-		res *= x;
-	return res;
-}
-
-vec3[5] Verdoyante()
-{
-	vec3 pallet[5];
-	pallet[0] = vec3(0.f	/ 255.f,	0.f		/ 255.f,	0.f		/ 255.f);
-	pallet[1] = vec3(124.f	/ 255.f,	254.f	/ 255.f,	240.f	/ 255.f);
-	pallet[2] = vec3(107.f	/ 255.f,	255.f	/ 255.f,	184.f	/ 255.f);
-	pallet[3] = vec3(44.f	/ 255.f,	234.f	/ 255.f,	163.f	/ 255.f);
-	pallet[4] = vec3(40.f	/ 255.f,	150.f	/ 255.f,	90.f	/ 255.f);
-	return pallet;
-}
+#define MAX_PALETTE_SIZE 8
+uniform vec3 palette[MAX_PALETTE_SIZE];
+uniform int paletteSize;
 
 vec3 get_color(float iterations)
 {
-	int nbColors = 5;
-	vec3[5] pallet = Verdoyante();
-
 	float value = iterations / float(maxIter);
 	vec3 color = vec3(0);
 
 	float min_value;
 	float max_value;
 
-	for (int i = 0; i < int(nbColors - 1); i++)
+	for (int i = 0; i < paletteSize - 1; i++)
 	{
-		min_value = float(i) / nbColors;
-		max_value = float(i + 1) / nbColors;
+		min_value = float(i) / float(paletteSize);
+		max_value = float(i + 1) / float(paletteSize);
 
 		if (value >= min_value && value <= max_value)
 		{
-			color = mix(pallet[i], pallet[i + 1], (value - min_value) * nbColors);
-            break;
+			color = mix(palette[i], palette[i + 1], (value - min_value) * float(paletteSize));
+			break;
 		}
 	}
 
@@ -94,7 +71,7 @@ vec3 tricorn(vec2 p)
         float value = mod(smooth_val, float(maxIter) / color_mod);
         color = get_color(value);
     }
-    else 
+    else
     {
         int shifted_i = iter * int( maxIter / color_mod) % int(maxIter);
         float value = mod(float(shifted_i), float(maxIter) / color_mod);

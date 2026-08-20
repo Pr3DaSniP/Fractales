@@ -1,21 +1,20 @@
 #include "Fractale.h"
 
-#include <array>
 #include <imgui.h>
 
-void Fractale::loadPaletteShaders(const std::string& shaderFolder, const std::string& namePrefix)
-{
-    static constexpr std::array<const char*, 6> kPaletteNames = {
-        "Original", "Fire", "Electric", "Gold", "Verdoyante", "Perle"
-    };
+#include "core/Palette.h"
 
-    m_shaders.reserve(kPaletteNames.size());
-    for (const char* palette : kPaletteNames)
-    {
-        std::string fragmentPath =
-            "shaders/" + shaderFolder + "/" + namePrefix + "_" + palette + ".fs";
-        m_shaders.push_back(std::make_unique<Shader>(kVertexShaderPath, fragmentPath));
-    }
+void Fractale::loadShader(const std::string& name)
+{
+    std::string fragmentPath = "shaders/" + name + ".fs";
+    m_shader = std::make_unique<Shader>(kVertexShaderPath, fragmentPath);
+}
+
+void Fractale::applyPalette()
+{
+    const Palette& palette = allPalettes().at(m_activePalette);
+    m_shader->setVec3Array("palette", palette.colors);
+    m_shader->setInt("paletteSize", palette.colorCount());
 }
 
 void Fractale::menu()

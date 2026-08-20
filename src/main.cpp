@@ -26,7 +26,7 @@ namespace
 
     void resetRenderingShader()
     {
-        g_fractales[selectedFractal]->setActiveShader(0);
+        g_fractales[selectedFractal]->setActivePalette(0);
         Shader& shader = g_fractales[selectedFractal]->shader();
 
         shader.setInt("maxIter", 40);
@@ -55,7 +55,7 @@ namespace
                 "##color_palette", &selectedPalette,
                 "Original\0Fire\0Electric\0Gold\0Verdoyante\0Perle", 6);
 
-            g_fractales[selectedFractal]->setActiveShader(selectedPalette);
+            g_fractales[selectedFractal]->setActivePalette(selectedPalette);
         }
     };
 }

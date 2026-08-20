@@ -15,8 +15,6 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
     }
     catch (...)
     {
-        // Le vertex shader a compilé mais pas le fragment : on nettoie
-        // quand même avant de laisser l'exception remonter.
         glDeleteShader(vertexShader);
         throw;
     }
@@ -32,8 +30,6 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
         throw;
     }
 
-    // Une fois linkés dans le programme, les objets shader individuels
-    // ne sont plus nécessaires.
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 }
@@ -131,6 +127,12 @@ void Shader::setVec2(const std::string& name, float x, float y)
 void Shader::setVec3(const std::string& name, float x, float y, float z)
 {
     glUniform3f(uniformLocation(name), x, y, z);
+}
+
+void Shader::setVec3Array(const std::string& name, const std::vector<float>& values)
+{
+    GLsizei count = static_cast<GLsizei>(values.size() / 3);
+    glUniform3fv(uniformLocation(name), count, values.data());
 }
 
 void Shader::setMat4(const std::string& name, const float* value)

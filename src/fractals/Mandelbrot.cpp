@@ -3,11 +3,12 @@
 Mandelbrot::Mandelbrot()
 {
     m_id = 0;
-    loadPaletteShaders("mandelbrots", "mandelbrot");
+    loadShader("mandelbrot");
 }
 
 void Mandelbrot::render()
 {
+    applyPalette();
     shader().setFloat("maxIter", static_cast<float>(m_iterations));
     shader().setBool("smooth_color", m_smooth);
     shader().setFloat("colorRange", m_colorRange);
