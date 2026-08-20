@@ -72,6 +72,7 @@ add_executable(fractales
     src/main.cpp
     src/core/Shader.cpp
     src/core/Fractale.cpp
+    src/core/Application.cpp
     src/fractals/Mandelbrot.cpp
     src/fractals/Julia.cpp
     src/fractals/BurningShip.cpp
