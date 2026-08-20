@@ -1,8 +1,12 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <memory>
 
-#include "core/Shader.h"
+#include "fractals/Mandelbrot.h"
+
+// Définition de l'extern déclaré dans core/Fractale.h.
+int selectedFractal = 0;
 
 int main()
 {
@@ -38,11 +42,7 @@ int main()
 
     std::cout << "OpenGL charge : " << glGetString(GL_VERSION) << "\n";
 
-    // Test de la classe Shader : compile/link + dessine un quad plein
-    // écran teinté par un uniform, pour valider le pipeline complet
-    // (RAII, cache d'uniforms, attribute pointer) avant de migrer le
-    // reste du rendu de fractales.
-    Shader testShader("shaders/vertex.vs", "shaders/test.fs");
+    auto fractale = std::make_unique<Mandelbrot>();
 
     float quadVertices[] = {
         -1.0f, -1.0f,
@@ -70,12 +70,17 @@ int main()
         glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        testShader.use();
-        testShader.setVec3("testColor", 0.2f, 0.6f, 0.9f);
+        fractale->render();
+        fractale->shader().setInt("width", width);
+        fractale->shader().setInt("height", height);
+        fractale->shader().setFloat("zoom", 0.0f);
+        fractale->shader().setFloat("mouseX", 0.0f);
+        fractale->shader().setFloat("mouseY", 0.0f);
+        fractale->shader().setBool("infiniteZoom", false);
+
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         glBindVertexArray(0);
-        testShader.unuse();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

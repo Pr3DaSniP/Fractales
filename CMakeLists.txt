@@ -71,7 +71,15 @@ target_link_libraries(imgui PUBLIC glfw glad_gl_core_33)
 add_executable(fractales
     src/main.cpp
     src/core/Shader.cpp
+    src/core/Fractale.cpp
+    src/fractals/Mandelbrot.cpp
+    src/fractals/Julia.cpp
+    src/fractals/BurningShip.cpp
+    src/fractals/Tricorn.cpp
+    src/fractals/Multibrot.cpp
 )
+
+target_include_directories(fractales PRIVATE src)
 
 target_link_libraries(fractales PRIVATE
     glfw
