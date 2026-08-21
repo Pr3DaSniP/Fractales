@@ -6,27 +6,16 @@
 #include <unordered_map>
 #include <vector>
 
-// Représente un programme shader OpenGL (vertex + fragment) lié.
-//
-// RAII : le constructeur compile et link le programme, le destructeur le
-// libère. La classe est move-only (pas de copie possible) pour garantir
-// qu'un seul objet C++ ne soit jamais responsable de la libération d'un
-// m_programID donné -> pas de double free / double glDeleteProgram.
 class Shader
 {
 public:
-    // Compile et link un programme à partir de deux fichiers sources.
-    // Lance std::runtime_error en cas d'échec de compilation ou de link.
     Shader(const std::string& vertexPath, const std::string& fragmentPath);
 
     ~Shader();
 
-    // Non copyable : un GLuint de programme ne doit avoir qu'un seul
-    // propriétaire C++ à la fois.
     Shader(const Shader&) = delete;
     Shader& operator=(const Shader&) = delete;
 
-    // Move-only : transfère la propriété du programme OpenGL.
     Shader(Shader&& other) noexcept;
     Shader& operator=(Shader&& other) noexcept;
 
@@ -41,8 +30,9 @@ public:
     void setVec2(const std::string& name, float x, float y);
     void setVec3(const std::string& name, float x, float y, float z);
 
-    // Envoie un tableau de vec3 contigu (ex: une palette de couleurs) en un
-    // seul appel. "values" doit contenir 3 floats par couleur (r,g,b,r,g,b,...).
+    void setDouble(const std::string& name, double value);
+    double getDouble(const std::string& name) const;
+
     void setVec3Array(const std::string& name, const std::vector<float>& values);
 
     void setMat4(const std::string& name, const float* value);

@@ -1,17 +1,17 @@
-#version 330 core
+#version 410 core
 out vec4 FragColor;
 
 uniform float maxIter;
-uniform float mouseX;
-uniform float mouseY;
-uniform float zoom;
+uniform double mouseX;
+uniform double mouseY;
+uniform double zoom;
 uniform float colorRange;
 uniform bool smooth_color;
 
 uniform bool infiniteZoom;
-uniform float centerX;
-uniform float centerY;
-uniform float zoomFactor;
+uniform double centerX;
+uniform double centerY;
+uniform double zoomFactor;
 
 uniform int width;
 uniform int height;
@@ -43,22 +43,22 @@ vec3 get_color(float iterations)
 	return color;
 }
 
-vec3 tricorn(vec2 p)
+vec3 tricorn(dvec2 p)
 {
 	int iter = 0;
-	vec2 z = p;
-	vec2 temp = vec2(0.0, 0.0);
+	dvec2 z = p;
+	dvec2 temp = dvec2(0.0, 0.0);
 	float color_mod = float(maxIter) * colorRange * 0.01f;
 
-	float smooth_val = exp(-length(temp));
+	float smooth_val = exp(-length(vec2(temp)));
 
-	while(z.x*z.x + z.y*z.y < 4.0 && iter < maxIter)
+	while (z.x * z.x + z.y * z.y < 4.0lf && iter < maxIter)
 	{
 		temp.x = z.x * z.x - z.y * z.y + p.x;
-		temp.y = -2.0 * z.x * z.y + p.y;
+		temp.y = -2.0lf * z.x * z.y + p.y;
 		z = temp;
 		iter++;
-		smooth_val += exp(-length(temp));
+		smooth_val += exp(-length(vec2(temp)));
 	}
 
 	vec3 color = vec3(0);
@@ -83,10 +83,10 @@ vec3 tricorn(vec2 p)
 
 void main()
 {
-	float zooming = 1.0;
-	vec2 pos;
-	pos = (2.5*(gl_FragCoord.xy - 0.5 * vec2(width, height)) / float(height)) / (zooming + zoom);
-    pos += vec2(-mouseX, mouseY);
+	double zooming = 1.0lf;
+	dvec2 pos;
+	pos = (2.5lf * (dvec2(gl_FragCoord.xy) - 0.5lf * dvec2(width, height)) / double(height)) / (zooming + zoom);
+    pos += dvec2(-mouseX, mouseY);
 	vec3 col = tricorn(pos);
 	FragColor = vec4(col, 1.0);
 }

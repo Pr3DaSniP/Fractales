@@ -147,6 +147,18 @@ float Shader::getFloat(const std::string& name) const
     return value;
 }
 
+void Shader::setDouble(const std::string& name, double value)
+{
+    glUniform1d(uniformLocation(name), value);
+}
+
+double Shader::getDouble(const std::string& name) const
+{
+    double value = 0.0;
+    glGetUniformdv(m_programID, uniformLocation(name), &value);
+    return value;
+}
+
 void Shader::setAttributePointer(const std::string& name, int size, int stride, int offset)
 {
     GLint location = attributeLocation(name);

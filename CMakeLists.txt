@@ -37,7 +37,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glad)
 
-glad_add_library(glad_gl_core_33 STATIC API gl:core=3.3)
+glad_add_library(glad_gl_core_41 STATIC API gl:core=4.1)
 
 # ---------------------------------------------------------------------------
 # Dear ImGui (n'a pas de CMakeLists officiel -> on construit la lib nous-même)
@@ -63,7 +63,7 @@ target_include_directories(imgui PUBLIC
     ${imgui_SOURCE_DIR}
     ${imgui_SOURCE_DIR}/backends
 )
-target_link_libraries(imgui PUBLIC glfw glad_gl_core_33)
+target_link_libraries(imgui PUBLIC glfw glad_gl_core_41)
 
 # ---------------------------------------------------------------------------
 # Exécutable principal
@@ -85,7 +85,7 @@ target_include_directories(fractales PRIVATE src)
 
 target_link_libraries(fractales PRIVATE
     glfw
-    glad_gl_core_33
+    glad_gl_core_41
     imgui
 )
 

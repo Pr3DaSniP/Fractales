@@ -1,17 +1,17 @@
-#version 330 core
+#version 410 core
 out vec4 FragColor;
 
 uniform float maxIter;
-uniform float mouseX;
-uniform float mouseY;
-uniform float zoom;
+uniform double mouseX;
+uniform double mouseY;
+uniform double zoom;
 uniform float colorRange;
 uniform bool smooth_color;
 
 uniform bool infiniteZoom;
-uniform float centerX;
-uniform float centerY;
-uniform float zoomFactor;
+uniform double centerX;
+uniform double centerY;
+uniform double zoomFactor;
 
 uniform int width;
 uniform int height;
@@ -45,41 +45,42 @@ vec3 get_color(float iterations)
 	return color;
 }
 
-float puissance(float x, float n)
+double puissance(double x, float n)
 {
-	float res = 1.0;
-	for(int i = 0; i < n; i++)
+	double res = 1.0lf;
+	for (int i = 0; i < n; i++)
 		res *= x;
 	return res;
 }
 
-vec3 multibrot(vec2 p, int n)
+vec3 multibrot(dvec2 p, int n)
 {
-	vec2 z = p;
-	vec2 temp = vec2(0.0, 0.0);
+	dvec2 z = p;
+	dvec2 temp = dvec2(0.0, 0.0);
 	vec3 color = vec3(0, 0, 0);
 	float color_mod = float(maxIter) * colorRange * 0.01f;
 
-	float smooth_val = exp(-length(temp));
+	float smooth_val = exp(-length(vec2(temp)));
 
     int iter = 0;
 
-	vec2 c = p;
+	dvec2 c = p;
 
-	float max_mod = smooth_color ? 1000.0 : 4.0;
+	double max_mod = smooth_color ? 1000.0lf : 4.0lf;
 
-    while (z.x*z.x + z.y*z.y < max_mod && iter < maxIter)
+    while (z.x * z.x + z.y * z.y < max_mod && iter < maxIter)
     {
-		float tmpVal = z.x*z.x+z.y*z.y;
-		temp.x = puissance(tmpVal, n/2)*cos(n*atan(z.y,z.x)) + c.x;
-		temp.y = puissance(tmpVal, n/2)*sin(n*atan(z.y,z.x)) + c.y;
+		double tmpVal = z.x * z.x + z.y * z.y;
+		float angle = float(n) * atan(float(z.y), float(z.x));
+		temp.x = puissance(tmpVal, n / 2) * double(cos(angle)) + c.x;
+		temp.y = puissance(tmpVal, n / 2) * double(sin(angle)) + c.y;
 
 		z.x = temp.x;
 		z.y = temp.y;
 
 		iter++;
 
-		smooth_val += exp(-length(temp));
+		smooth_val += exp(-length(vec2(temp)));
     }
 
 	if (iter == maxIter) {
@@ -102,10 +103,10 @@ vec3 multibrot(vec2 p, int n)
 
 void main()
 {
-	float zooming = 1.0;
-	vec2 pos;
-	pos = (2.5*(gl_FragCoord.xy - 0.5 * vec2(width, height)) / float(height)) / (zooming + zoom);
-    pos += vec2(-mouseX, mouseY);
+	double zooming = 1.0lf;
+	dvec2 pos;
+	pos = (2.5lf * (dvec2(gl_FragCoord.xy) - 0.5lf * dvec2(width, height)) / double(height)) / (zooming + zoom);
+    pos += dvec2(-mouseX, mouseY);
 	vec3 col = multibrot(pos, numberOfBrot);
 	FragColor = vec4(col, 1.0);
 }

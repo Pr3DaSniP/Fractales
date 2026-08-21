@@ -22,7 +22,7 @@ namespace
     std::vector<std::unique_ptr<Fractale>> g_fractales;
     int g_screenWidth = 1600;
     int g_screenHeight = 900;
-    float g_zoomFactor = 1.0f;
+    double g_zoomFactor = 1.0;
 
     void resetRenderingShader()
     {
@@ -30,17 +30,17 @@ namespace
         Shader& shader = g_fractales[selectedFractal]->shader();
 
         shader.setInt("maxIter", 40);
-        shader.setFloat("zoom", 0.0f);
-        shader.setFloat("mouseX", 0.0f);
-        shader.setFloat("mouseY", 0.0f);
-        shader.setFloat("centerX", 0.0f);
-        shader.setFloat("centerY", 0.0f);
+        shader.setDouble("zoom", 0.0);
+        shader.setDouble("mouseX", 0.0);
+        shader.setDouble("mouseY", 0.0);
+        shader.setDouble("centerX", 0.0);
+        shader.setDouble("centerY", 0.0);
         shader.setBool("infiniteZoom", false);
-        shader.setFloat("zoomFactor", 1.0f);
+        shader.setDouble("zoomFactor", 1.0);
         shader.setInt("width", g_screenWidth);
         shader.setInt("height", g_screenHeight);
 
-        g_zoomFactor = 1.0f;
+        g_zoomFactor = 1.0;
     }
 
     struct PaletteMenu
@@ -68,8 +68,8 @@ int main()
         return -1;
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
@@ -125,13 +125,13 @@ int main()
         g_fractales.push_back(std::make_unique<Tricorn>());
         g_fractales.push_back(std::make_unique<Multibrot>());
 
-        Application app(window, "#version 330", "Fractales");
+        Application app(window, "#version 410", "Fractales");
         PaletteMenu paletteMenu;
 
         glfwSetScrollCallback(window, [](GLFWwindow*, double, double yoffset)
         {
             Shader& shader = g_fractales[selectedFractal]->shader();
-            shader.setFloat("zoom", shader.getFloat("zoom") + static_cast<float>(yoffset) * 0.1f);
+            shader.setDouble("zoom", shader.getDouble("zoom") + yoffset * 0.1);
         });
 
         glfwSetKeyCallback(window, [](GLFWwindow* w, int key, int /*scancode*/, int action, int /*mods*/)
@@ -144,22 +144,22 @@ int main()
 
             if (key == GLFW_KEY_W && action == GLFW_REPEAT)
             {
-                std::pair<float, float> coords = g_fractales[selectedFractal]->coordsForZoom();
+                std::pair<double, double> coords = g_fractales[selectedFractal]->coordsForZoom();
                 Shader& shader = g_fractales[selectedFractal]->shader();
 
                 shader.setBool("infiniteZoom", true);
-                shader.setFloat("centerX", coords.first);
-                shader.setFloat("centerY", coords.second);
-                shader.setFloat("zoomFactor", g_zoomFactor);
+                shader.setDouble("centerX", coords.first);
+                shader.setDouble("centerY", coords.second);
+                shader.setDouble("zoomFactor", g_zoomFactor);
 
-                g_zoomFactor += 10.0f;
+                g_zoomFactor += 10.0;
             }
             else if (key == GLFW_KEY_W && action == GLFW_RELEASE)
             {
                 Shader& shader = g_fractales[selectedFractal]->shader();
                 shader.setBool("infiniteZoom", false);
-                shader.setFloat("zoomFactor", 0.0f);
-                g_zoomFactor = 1.0f;
+                shader.setDouble("zoomFactor", 0.0);
+                g_zoomFactor = 1.0;
             }
         });
 
@@ -179,11 +179,11 @@ int main()
                 double xpos, ypos;
                 glfwGetCursorPos(window, &xpos, &ypos);
 
-                float x = static_cast<float>(xpos / width) * 4.0f - 2.0f;
-                float y = static_cast<float>(ypos / height) * 2.0f - 1.0f;
+                double x = (xpos / width) * 4.0 - 2.0;
+                double y = (ypos / height) * 2.0 - 1.0;
 
-                activeShader.setFloat("mouseX", x);
-                activeShader.setFloat("mouseY", y);
+                activeShader.setDouble("mouseX", x);
+                activeShader.setDouble("mouseY", y);
             }
 
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
