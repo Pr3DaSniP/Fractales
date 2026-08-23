@@ -1,5 +1,7 @@
 #include "Phoenix.h"
 
+#include <cmath>
+
 #include <imgui.h>
 
 Phoenix::Phoenix()
@@ -34,4 +36,12 @@ void Phoenix::menu()
 std::pair<double, double> Phoenix::coordsForZoom() const
 {
     return std::make_pair(0.0, 0.0);
+}
+
+void Phoenix::animateParameters(float t)
+{
+    float angle = t * 2.0f * 3.14159265f;
+    m_v1 = 0.5667f * std::cos(angle);
+    m_v2 = 0.5667f * std::sin(angle);
+    m_p = -0.5f + 0.3f * std::sin(angle);
 }

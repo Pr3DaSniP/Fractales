@@ -10,6 +10,7 @@
 
 #include "core/Application.h"
 #include "core/Fractale.h"
+#include "core/GifExport.h"
 #include "core/Screenshot.h"
 #include "fractals/BurningShip.h"
 #include "fractals/CelticMandelbrot.h"
@@ -261,6 +262,24 @@ int main()
             if (!lastExportPath.empty())
             {
                 ImGui::Text("Exporte : %s", lastExportPath.c_str());
+            }
+
+            ImGui::NewLine();
+            if (ImGui::Button("Exporter en GIF (zoom progressif)"))
+            {
+                lastExportPath = exportZoomGif(
+                    *g_fractales[selectedFractal], vao, 480, 480 * height / width,
+                    /*frameCount*/ 60, /*zoomStep*/ 0.5, /*delayMs*/ 50);
+            }
+
+            if (g_fractales[selectedFractal]->supportsParameterAnimation())
+            {
+                if (ImGui::Button("Exporter en GIF (morphing des parametres)"))
+                {
+                    lastExportPath = exportParameterGif(
+                        *g_fractales[selectedFractal], vao, 480, 480 * height / width,
+                        /*frameCount*/ 60, /*delayMs*/ 50);
+                }
             }
 
             g_fractales[selectedFractal]->render();

@@ -23,6 +23,10 @@ public:
 
     virtual std::pair<double, double> coordsForZoom() const = 0;
 
+    virtual bool supportsParameterAnimation() const { return false; }
+
+    virtual void animateParameters(float /*t*/) {}
+
 protected:
     static constexpr const char* kVertexShaderPath = "shaders/vertex.vs";
 

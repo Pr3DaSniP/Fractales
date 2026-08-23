@@ -11,6 +11,9 @@ public:
     void menu() override;
     std::pair<double, double> coordsForZoom() const override;
 
+    bool supportsParameterAnimation() const override { return true; }
+    void animateParameters(float t) override;
+
 private:
     float m_v1 = 0.311f;
     float m_v2 = -0.026f;

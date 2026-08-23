@@ -76,6 +76,16 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(stb)
 
 # ---------------------------------------------------------------------------
+# gif-h (header-only, écriture de GIF animés pour l'export d'animation)
+# ---------------------------------------------------------------------------
+FetchContent_Declare(
+    gif_h
+    GIT_REPOSITORY https://github.com/charlietangora/gif-h.git
+    GIT_SHALLOW    TRUE
+)
+FetchContent_MakeAvailable(gif_h)
+
+# ---------------------------------------------------------------------------
 # Exécutable principal
 # ---------------------------------------------------------------------------
 add_executable(fractales
@@ -85,6 +95,7 @@ add_executable(fractales
     src/core/Palette.cpp
     src/core/Application.cpp
     src/core/Screenshot.cpp
+    src/core/GifExport.cpp
     src/core/stb_image_write_impl.cpp
     src/fractals/Mandelbrot.cpp
     src/fractals/Julia.cpp
@@ -98,7 +109,7 @@ add_executable(fractales
     src/fractals/Newton.cpp
 )
 
-target_include_directories(fractales PRIVATE src ${stb_SOURCE_DIR})
+target_include_directories(fractales PRIVATE src ${stb_SOURCE_DIR} ${gif_h_SOURCE_DIR})
 
 target_link_libraries(fractales PRIVATE
     glfw

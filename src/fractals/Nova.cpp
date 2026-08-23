@@ -1,5 +1,7 @@
 #include "Nova.h"
 
+#include <cmath>
+
 #include <imgui.h>
 
 Nova::Nova()
@@ -30,4 +32,9 @@ void Nova::menu()
 std::pair<double, double> Nova::coordsForZoom() const
 {
     return std::make_pair(0.0, 0.0);
+}
+
+void Nova::animateParameters(float t)
+{
+    m_relaxation = 1.0f + 0.5f * std::sin(t * 2.0f * 3.14159265f);
 }

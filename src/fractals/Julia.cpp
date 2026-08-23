@@ -1,5 +1,7 @@
 #include "Julia.h"
 
+#include <cmath>
+
 #include <imgui.h>
 
 Julia::Julia()
@@ -32,4 +34,12 @@ void Julia::menu()
 std::pair<double, double> Julia::coordsForZoom() const
 {
     return std::make_pair(-0.0175f, -0.453333f);
+}
+
+void Julia::animateParameters(float t)
+{
+    float angle = t * 2.0f * 3.14159265f;
+    float radius = 0.7885f;
+    m_v1 = radius * std::cos(angle);
+    m_v2 = radius * std::sin(angle);
 }
