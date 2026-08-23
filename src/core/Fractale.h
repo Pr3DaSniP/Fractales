@@ -21,7 +21,7 @@ public:
 
     Shader& shader() { return *m_shader; }
 
-    virtual std::pair<float, float> coordsForZoom() const = 0;
+    virtual std::pair<double, double> coordsForZoom() const = 0;
 
 protected:
     static constexpr const char* kVertexShaderPath = "shaders/vertex.vs";

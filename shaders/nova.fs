@@ -1,6 +1,8 @@
 #version 410 core
 out vec4 FragColor;
 
+uniform float relaxation;
+
 uniform float maxIter;
 uniform double mouseX;
 uniform double mouseY;
@@ -19,11 +21,6 @@ uniform int height;
 #define MAX_PALETTE_SIZE 8
 uniform vec3 palette[MAX_PALETTE_SIZE];
 uniform int paletteSize;
-
-double modulus_2(dvec2 z)
-{
-	return z.x * z.x + z.y * z.y;
-}
 
 vec3 get_color(float iterations)
 {
@@ -48,32 +45,60 @@ vec3 get_color(float iterations)
 	return color;
 }
 
-vec3 mandelbrot(dvec2 p)
+dvec2 cmul(dvec2 a, dvec2 b)
 {
-    dvec2 number = dvec2(0);
+    return dvec2(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
+}
+
+dvec2 cdiv(dvec2 a, dvec2 b)
+{
+    double denom = b.x * b.x + b.y * b.y;
+    return dvec2((a.x * b.x + a.y * b.y) / denom, (a.y * b.x - a.x * b.y) / denom);
+}
+
+vec3 nova(dvec2 p)
+{
     dvec2 c = dvec2(0);
-    dvec2 temp = dvec2(0);
-    int i = 0;
-    vec3 color = vec3(0);
-    float color_mod = float(maxIter) * colorRange * 0.01f;
-
-    float smooth_val = exp(-length(vec2(number)));
-
     if (!infiniteZoom)
         c = p;
     else
         c = dvec2(centerX, centerY) + p / pow(1.001f, float(zoomFactor));
 
-    double max_mod = smooth_color ? 1000.0lf : 4.0lf;
+    dvec2 z = dvec2(1.0, 0.0);
+    int i = 0;
+    float smooth_val = 0.0;
+    float color_mod = float(maxIter) * colorRange * 0.01f;
+    double max_mod = 1.0e8lf;
 
-    while (modulus_2(number) < max_mod && i < maxIter)
+    while (i < maxIter)
     {
-        temp = number;
-        number.x = temp.x * temp.x - temp.y * temp.y + c.x;
-        number.y = 2.0lf * temp.x * temp.y + c.y;
+        if (!(z.x * z.x + z.y * z.y <= max_mod))
+            break;
+
+        dvec2 z2 = cmul(z, z);
+        dvec2 z3 = cmul(z2, z);
+        dvec2 numerator = z3 - dvec2(1.0, 0.0);
+        dvec2 denominator = 3.0lf * z2;
+        dvec2 step = cdiv(numerator, denominator);
+
+        dvec2 zNext = z - double(relaxation) * step + c;
+
+        if (!(zNext.x * zNext.x + zNext.y * zNext.y <= max_mod))
+            break;
+
+        smooth_val += exp(-length(vec2(zNext - z)));
         i++;
-        smooth_val += exp(-length(vec2(number)));
+
+        if (length(vec2(zNext - z)) < 1e-6)
+        {
+            z = zNext;
+            break;
+        }
+
+        z = zNext;
     }
+
+    vec3 color = vec3(0);
 
     if (i == maxIter) {
         color = vec3(0.0);
@@ -99,6 +124,6 @@ void main()
     dvec2 pos;
 	pos = (2.5lf * (dvec2(gl_FragCoord.xy) - 0.5lf * dvec2(width, height)) / double(height)) / (zooming + zoom);
     pos += dvec2(-mouseX, mouseY);
-	vec3 col = mandelbrot(pos);
+	vec3 col = nova(pos);
     FragColor = vec4(col,1);
 }

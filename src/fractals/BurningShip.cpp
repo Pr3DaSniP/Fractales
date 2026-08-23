@@ -21,7 +21,7 @@ void BurningShip::menu()
     Fractale::menu();
 }
 
-std::pair<float, float> BurningShip::coordsForZoom() const
+std::pair<double, double> BurningShip::coordsForZoom() const
 {
     return std::make_pair(-1.762f, -0.02f);
 }

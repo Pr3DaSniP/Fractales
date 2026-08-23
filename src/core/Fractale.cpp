@@ -29,6 +29,16 @@ void Fractale::menu()
     ImGui::RadioButton("Tricorn", &selectedFractal, 3);
     ImGui::NextColumn();
     ImGui::RadioButton("Multibrot", &selectedFractal, 4);
+    ImGui::NextColumn();
+    ImGui::RadioButton("Celtic", &selectedFractal, 5);
+    ImGui::NextColumn();
+    ImGui::RadioButton("Phoenix", &selectedFractal, 6);
+    ImGui::NextColumn();
+    ImGui::RadioButton("Nova", &selectedFractal, 7);
+    ImGui::NextColumn();
+    ImGui::RadioButton("Lambda", &selectedFractal, 8);
+    ImGui::NextColumn();
+    ImGui::RadioButton("Newton", &selectedFractal, 9);
     ImGui::Columns(1);
 
     ImGui::NewLine();

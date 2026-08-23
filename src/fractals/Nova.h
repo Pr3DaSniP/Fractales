@@ -2,15 +2,15 @@
 
 #include "core/Fractale.h"
 
-class Multibrot : public Fractale
+class Nova : public Fractale
 {
 public:
-    Multibrot();
+    Nova();
 
     void render() override;
     void menu() override;
     std::pair<double, double> coordsForZoom() const override;
 
 private:
-    int m_numberOfBrot = 4;
+    float m_relaxation = 1.0f;
 };

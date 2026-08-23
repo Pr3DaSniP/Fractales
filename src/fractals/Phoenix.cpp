@@ -1,15 +1,15 @@
-#include "Julia.h"
+#include "Phoenix.h"
 
 #include <imgui.h>
 
-Julia::Julia()
+Phoenix::Phoenix()
 {
-    m_id = 1;
+    m_id = 6;
     m_iterations = 150;
-    loadShader("julia");
+    loadShader("phoenix");
 }
 
-void Julia::render()
+void Phoenix::render()
 {
     applyPalette();
     shader().setFloat("maxIter", static_cast<float>(m_iterations));
@@ -17,19 +17,21 @@ void Julia::render()
     shader().setFloat("colorRange", m_colorRange);
     shader().setFloat("v1", m_v1);
     shader().setFloat("v2", m_v2);
+    shader().setFloat("phoenixP", m_p);
     shader().use();
 }
 
-void Julia::menu()
+void Phoenix::menu()
 {
     Fractale::menu();
     ImGui::NewLine();
-    ImGui::Text("Julia");
+    ImGui::Text("Phoenix");
     ImGui::SliderFloat("v1", &m_v1, -2.f, 2.f);
     ImGui::SliderFloat("v2", &m_v2, -2.f, 2.f);
+    ImGui::SliderFloat("p", &m_p, -1.f, 1.f);
 }
 
-std::pair<double, double> Julia::coordsForZoom() const
+std::pair<double, double> Phoenix::coordsForZoom() const
 {
-    return std::make_pair(-0.0175f, -0.453333f);
+    return std::make_pair(0.0, 0.0);
 }

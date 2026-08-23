@@ -21,7 +21,7 @@ void Tricorn::menu()
     Fractale::menu();
 }
 
-std::pair<float, float> Tricorn::coordsForZoom() const
+std::pair<double, double> Tricorn::coordsForZoom() const
 {
     return std::make_pair(-1.762f, -0.02f);
 }

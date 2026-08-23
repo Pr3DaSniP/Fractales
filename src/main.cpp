@@ -4,15 +4,22 @@
 
 #include <iostream>
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
 #include "core/Application.h"
 #include "core/Fractale.h"
+#include "core/Screenshot.h"
 #include "fractals/BurningShip.h"
+#include "fractals/CelticMandelbrot.h"
 #include "fractals/Julia.h"
+#include "fractals/LambdaFractal.h"
 #include "fractals/Mandelbrot.h"
 #include "fractals/Multibrot.h"
+#include "fractals/Newton.h"
+#include "fractals/Nova.h"
+#include "fractals/Phoenix.h"
 #include "fractals/Tricorn.h"
 
 int selectedFractal = 0;
@@ -23,6 +30,10 @@ namespace
     int g_screenWidth = 1600;
     int g_screenHeight = 900;
     double g_zoomFactor = 1.0;
+
+    bool g_dragging = false;
+    double g_lastCursorX = 0.0;
+    double g_lastCursorY = 0.0;
 
     void resetRenderingShader()
     {
@@ -124,14 +135,43 @@ int main()
         g_fractales.push_back(std::make_unique<BurningShip>());
         g_fractales.push_back(std::make_unique<Tricorn>());
         g_fractales.push_back(std::make_unique<Multibrot>());
+        g_fractales.push_back(std::make_unique<CelticMandelbrot>());
+        g_fractales.push_back(std::make_unique<Phoenix>());
+        g_fractales.push_back(std::make_unique<Nova>());
+        g_fractales.push_back(std::make_unique<LambdaFractal>());
+        g_fractales.push_back(std::make_unique<Newton>());
 
         Application app(window, "#version 410", "Fractales");
         PaletteMenu paletteMenu;
+        std::string lastExportPath;
 
-        glfwSetScrollCallback(window, [](GLFWwindow*, double, double yoffset)
+        glfwSetScrollCallback(window, [](GLFWwindow* w, double, double yoffset)
         {
+            if (ImGui::GetIO().WantCaptureMouse)
+                return;
+
             Shader& shader = g_fractales[selectedFractal]->shader();
-            shader.setDouble("zoom", shader.getDouble("zoom") + yoffset * 0.1);
+
+            double oldZoom = shader.getDouble("zoom");
+            double newZoom = oldZoom + yoffset * 0.1;
+
+            int width, height;
+            glfwGetFramebufferSize(w, &width, &height);
+
+            double xpos, ypos;
+            glfwGetCursorPos(w, &xpos, &ypos);
+
+            double k = 2.5 / static_cast<double>(height);
+            double baseX = k * (xpos - width / 2.0);
+            double baseY = k * (height / 2.0 - ypos);
+
+            double factor = 1.0 / (1.0 + oldZoom) - 1.0 / (1.0 + newZoom);
+            double mouseX = shader.getDouble("mouseX") - baseX * factor;
+            double mouseY = shader.getDouble("mouseY") + baseY * factor;
+
+            shader.setDouble("zoom", newZoom);
+            shader.setDouble("mouseX", mouseX);
+            shader.setDouble("mouseY", mouseY);
         });
 
         glfwSetKeyCallback(window, [](GLFWwindow* w, int key, int /*scancode*/, int action, int /*mods*/)
@@ -179,11 +219,23 @@ int main()
                 double xpos, ypos;
                 glfwGetCursorPos(window, &xpos, &ypos);
 
-                double x = (xpos / width) * 4.0 - 2.0;
-                double y = (ypos / height) * 2.0 - 1.0;
+                if (g_dragging)
+                {
+                    double deltaX = xpos - g_lastCursorX;
+                    double deltaY = ypos - g_lastCursorY;
+                    double scale = 2.5 / static_cast<double>(height) / (1.0 + activeShader.getDouble("zoom"));
 
-                activeShader.setDouble("mouseX", x);
-                activeShader.setDouble("mouseY", y);
+                    activeShader.setDouble("mouseX", activeShader.getDouble("mouseX") + deltaX * scale);
+                    activeShader.setDouble("mouseY", activeShader.getDouble("mouseY") + deltaY * scale);
+                }
+
+                g_lastCursorX = xpos;
+                g_lastCursorY = ypos;
+                g_dragging = true;
+            }
+            else
+            {
+                g_dragging = false;
             }
 
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -198,6 +250,18 @@ int main()
             app.beginFrame();
             g_fractales[selectedFractal]->menu();
             paletteMenu.menu();
+
+            ImGui::NewLine();
+            ImGui::Separator();
+            if (ImGui::Button("Exporter en PNG (x4 resolution)"))
+            {
+                lastExportPath = exportFractalToPNG(
+                    *g_fractales[selectedFractal], vao, width * 4, height * 4);
+            }
+            if (!lastExportPath.empty())
+            {
+                ImGui::Text("Exporte : %s", lastExportPath.c_str());
+            }
 
             g_fractales[selectedFractal]->render();
 

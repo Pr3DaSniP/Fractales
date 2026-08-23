@@ -48,31 +48,34 @@ vec3 get_color(float iterations)
 	return color;
 }
 
-vec3 mandelbrot(dvec2 p)
+dvec2 cmul(dvec2 a, dvec2 b)
 {
-    dvec2 number = dvec2(0);
-    dvec2 c = dvec2(0);
-    dvec2 temp = dvec2(0);
+    return dvec2(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
+}
+
+vec3 lambdaFractal(dvec2 p)
+{
+    dvec2 lambda = dvec2(0);
+    if (!infiniteZoom)
+        lambda = p;
+    else
+        lambda = dvec2(centerX, centerY) + p / pow(1.001f, float(zoomFactor));
+
+    dvec2 z = dvec2(0.5, 0.0);
     int i = 0;
     vec3 color = vec3(0);
     float color_mod = float(maxIter) * colorRange * 0.01f;
 
-    float smooth_val = exp(-length(vec2(number)));
-
-    if (!infiniteZoom)
-        c = p;
-    else
-        c = dvec2(centerX, centerY) + p / pow(1.001f, float(zoomFactor));
+    float smooth_val = exp(-length(vec2(z)));
 
     double max_mod = smooth_color ? 1000.0lf : 4.0lf;
 
-    while (modulus_2(number) < max_mod && i < maxIter)
+    while (modulus_2(z) < max_mod && i < maxIter)
     {
-        temp = number;
-        number.x = temp.x * temp.x - temp.y * temp.y + c.x;
-        number.y = 2.0lf * temp.x * temp.y + c.y;
+        dvec2 oneMinusZ = dvec2(1.0, 0.0) - z;
+        z = cmul(lambda, cmul(z, oneMinusZ));
         i++;
-        smooth_val += exp(-length(vec2(number)));
+        smooth_val += exp(-length(vec2(z)));
     }
 
     if (i == maxIter) {
@@ -99,6 +102,6 @@ void main()
     dvec2 pos;
 	pos = (2.5lf * (dvec2(gl_FragCoord.xy) - 0.5lf * dvec2(width, height)) / double(height)) / (zooming + zoom);
     pos += dvec2(-mouseX, mouseY);
-	vec3 col = mandelbrot(pos);
+	vec3 col = lambdaFractal(pos);
     FragColor = vec4(col,1);
 }

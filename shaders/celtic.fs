@@ -48,7 +48,7 @@ vec3 get_color(float iterations)
 	return color;
 }
 
-vec3 mandelbrot(dvec2 p)
+vec3 celtic(dvec2 p)
 {
     dvec2 number = dvec2(0);
     dvec2 c = dvec2(0);
@@ -69,7 +69,7 @@ vec3 mandelbrot(dvec2 p)
     while (modulus_2(number) < max_mod && i < maxIter)
     {
         temp = number;
-        number.x = temp.x * temp.x - temp.y * temp.y + c.x;
+        number.x = abs(temp.x * temp.x - temp.y * temp.y) + c.x;
         number.y = 2.0lf * temp.x * temp.y + c.y;
         i++;
         smooth_val += exp(-length(vec2(number)));
@@ -99,6 +99,6 @@ void main()
     dvec2 pos;
 	pos = (2.5lf * (dvec2(gl_FragCoord.xy) - 0.5lf * dvec2(width, height)) / double(height)) / (zooming + zoom);
     pos += dvec2(-mouseX, mouseY);
-	vec3 col = mandelbrot(pos);
+	vec3 col = celtic(pos);
     FragColor = vec4(col,1);
 }

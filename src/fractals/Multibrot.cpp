@@ -27,7 +27,7 @@ void Multibrot::menu()
     ImGui::SliderInt("Number of brot", &m_numberOfBrot, 1, 10);
 }
 
-std::pair<float, float> Multibrot::coordsForZoom() const
+std::pair<double, double> Multibrot::coordsForZoom() const
 {
     return std::make_pair(0.0f, 0.0f);
 }

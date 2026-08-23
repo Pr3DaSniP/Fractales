@@ -9,5 +9,5 @@ public:
 
     void render() override;
     void menu() override;
-    std::pair<float, float> coordsForZoom() const override;
+    std::pair<double, double> coordsForZoom() const override;
 };

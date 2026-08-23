@@ -66,6 +66,16 @@ target_include_directories(imgui PUBLIC
 target_link_libraries(imgui PUBLIC glfw glad_gl_core_41)
 
 # ---------------------------------------------------------------------------
+# stb_image_write (header-only, écriture PNG pour l'export d'image)
+# ---------------------------------------------------------------------------
+FetchContent_Declare(
+    stb
+    GIT_REPOSITORY https://github.com/nothings/stb.git
+    GIT_SHALLOW    TRUE
+)
+FetchContent_MakeAvailable(stb)
+
+# ---------------------------------------------------------------------------
 # Exécutable principal
 # ---------------------------------------------------------------------------
 add_executable(fractales
@@ -74,14 +84,21 @@ add_executable(fractales
     src/core/Fractale.cpp
     src/core/Palette.cpp
     src/core/Application.cpp
+    src/core/Screenshot.cpp
+    src/core/stb_image_write_impl.cpp
     src/fractals/Mandelbrot.cpp
     src/fractals/Julia.cpp
     src/fractals/BurningShip.cpp
     src/fractals/Tricorn.cpp
     src/fractals/Multibrot.cpp
+    src/fractals/CelticMandelbrot.cpp
+    src/fractals/Phoenix.cpp
+    src/fractals/Nova.cpp
+    src/fractals/LambdaFractal.cpp
+    src/fractals/Newton.cpp
 )
 
-target_include_directories(fractales PRIVATE src)
+target_include_directories(fractales PRIVATE src ${stb_SOURCE_DIR})
 
 target_link_libraries(fractales PRIVATE
     glfw

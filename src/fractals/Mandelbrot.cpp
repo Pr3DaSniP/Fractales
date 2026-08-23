@@ -20,7 +20,7 @@ void Mandelbrot::menu()
     Fractale::menu();
 }
 
-std::pair<float, float> Mandelbrot::coordsForZoom() const
+std::pair<double, double> Mandelbrot::coordsForZoom() const
 {
     return std::make_pair(0.4f, 0.35f);
 }

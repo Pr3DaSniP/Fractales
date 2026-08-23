@@ -1,6 +1,10 @@
 #version 410 core
 out vec4 FragColor;
 
+uniform float v1;
+uniform float v2;
+uniform float phoenixP;
+
 uniform float maxIter;
 uniform double mouseX;
 uniform double mouseY;
@@ -48,31 +52,31 @@ vec3 get_color(float iterations)
 	return color;
 }
 
-vec3 mandelbrot(dvec2 p)
+vec3 phoenix(dvec2 p)
 {
-    dvec2 number = dvec2(0);
-    dvec2 c = dvec2(0);
+    dvec2 c = dvec2(v1, v2);
+    dvec2 z = p;
+    dvec2 zPrev = dvec2(0.0);
     dvec2 temp = dvec2(0);
     int i = 0;
     vec3 color = vec3(0);
     float color_mod = float(maxIter) * colorRange * 0.01f;
 
-    float smooth_val = exp(-length(vec2(number)));
+    float smooth_val = exp(-length(vec2(z)));
 
-    if (!infiniteZoom)
-        c = p;
-    else
-        c = dvec2(centerX, centerY) + p / pow(1.001f, float(zoomFactor));
+    if (infiniteZoom)
+        z = dvec2(centerX, centerY) + p / pow(1.001f, float(zoomFactor));
 
     double max_mod = smooth_color ? 1000.0lf : 4.0lf;
 
-    while (modulus_2(number) < max_mod && i < maxIter)
+    while (modulus_2(z) < max_mod && i < maxIter)
     {
-        temp = number;
-        number.x = temp.x * temp.x - temp.y * temp.y + c.x;
-        number.y = 2.0lf * temp.x * temp.y + c.y;
+        temp = z;
+        z.x = temp.x * temp.x - temp.y * temp.y + c.x + double(phoenixP) * zPrev.x;
+        z.y = 2.0lf * temp.x * temp.y + c.y + double(phoenixP) * zPrev.y;
+        zPrev = temp;
         i++;
-        smooth_val += exp(-length(vec2(number)));
+        smooth_val += exp(-length(vec2(z)));
     }
 
     if (i == maxIter) {
@@ -99,6 +103,6 @@ void main()
     dvec2 pos;
 	pos = (2.5lf * (dvec2(gl_FragCoord.xy) - 0.5lf * dvec2(width, height)) / double(height)) / (zooming + zoom);
     pos += dvec2(-mouseX, mouseY);
-	vec3 col = mandelbrot(pos);
+	vec3 col = phoenix(pos);
     FragColor = vec4(col,1);
 }
