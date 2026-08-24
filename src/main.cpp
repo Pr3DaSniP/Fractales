@@ -41,7 +41,7 @@ namespace
         g_fractales[selectedFractal]->setActivePalette(0);
         Shader& shader = g_fractales[selectedFractal]->shader();
 
-        shader.setInt("maxIter", 40);
+        shader.setFloat("maxIter", 40.0f);
         shader.setDouble("zoom", 0.0);
         shader.setDouble("mouseX", 0.0);
         shader.setDouble("mouseY", 0.0);
@@ -156,6 +156,9 @@ int main()
             double oldZoom = shader.getDouble("zoom");
             double newZoom = oldZoom + yoffset * 0.1;
 
+            if (newZoom < -0.99)
+                newZoom = -0.99;
+
             int width, height;
             glfwGetFramebufferSize(w, &width, &height);
 
@@ -249,7 +252,11 @@ int main()
             app.updateFPSCounter(glfwGetTime());
 
             app.beginFrame();
+
+            ImGui::PushID(selectedFractal);
             g_fractales[selectedFractal]->menu();
+            ImGui::PopID();
+
             paletteMenu.menu();
 
             ImGui::NewLine();

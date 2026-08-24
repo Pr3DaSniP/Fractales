@@ -11,12 +11,12 @@ Multibrot::Multibrot()
 
 void Multibrot::render()
 {
+    shader().use();
     applyPalette();
     shader().setBool("smooth_color", m_smooth);
     shader().setFloat("colorRange", m_colorRange);
     shader().setFloat("maxIter", static_cast<float>(m_iterations));
     shader().setInt("numberOfBrot", m_numberOfBrot);
-    shader().use();
 }
 
 void Multibrot::menu()

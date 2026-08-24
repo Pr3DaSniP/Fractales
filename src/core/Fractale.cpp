@@ -1,5 +1,7 @@
 #include "Fractale.h"
 
+#include <iostream>
+
 #include <imgui.h>
 
 #include "core/Palette.h"

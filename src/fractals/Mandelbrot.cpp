@@ -8,11 +8,11 @@ Mandelbrot::Mandelbrot()
 
 void Mandelbrot::render()
 {
+    shader().use();
     applyPalette();
     shader().setFloat("maxIter", static_cast<float>(m_iterations));
     shader().setBool("smooth_color", m_smooth);
     shader().setFloat("colorRange", m_colorRange);
-    shader().use();
 }
 
 void Mandelbrot::menu()

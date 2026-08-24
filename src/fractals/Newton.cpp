@@ -9,9 +9,9 @@ Newton::Newton()
 
 void Newton::render()
 {
+    shader().use();
     applyPalette();
     shader().setFloat("maxIter", static_cast<float>(m_iterations));
-    shader().use();
 }
 
 void Newton::menu()

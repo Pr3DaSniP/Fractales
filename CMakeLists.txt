@@ -117,6 +117,20 @@ target_link_libraries(fractales PRIVATE
     imgui
 )
 
+# Sur Windows, construit l'exécutable comme une application "fenêtrée"
+# plutôt que "console" (pas de fenêtre cmd noire au lancement).
+# /ENTRY:mainCRTStartup garde int main() comme point d'entrée -- sans ça,
+# le linker chercherait WinMain() par défaut pour une appli WIN32_EXECUTABLE.
+#
+# FRACTALES_HIDE_CONSOLE=OFF (via le cache CMake ou CMakeSettings.json)
+# permet de la garder visible temporairement, utile pour voir les logs
+# std::cerr pendant une session de debug.
+option(FRACTALES_HIDE_CONSOLE "Cache la fenetre console au lancement" ON)
+if (WIN32 AND FRACTALES_HIDE_CONSOLE)
+    set_target_properties(fractales PROPERTIES WIN32_EXECUTABLE TRUE)
+    target_link_options(fractales PRIVATE /ENTRY:mainCRTStartup)
+endif()
+
 # Copie le dossier shaders/ à côté de l'exécutable pour que
 # les chemins relatifs (ex: "shaders/vertex.vs") fonctionnent au runtime.
 add_custom_command(TARGET fractales POST_BUILD

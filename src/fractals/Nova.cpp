@@ -13,12 +13,12 @@ Nova::Nova()
 
 void Nova::render()
 {
+    shader().use();
     applyPalette();
     shader().setFloat("maxIter", static_cast<float>(m_iterations));
     shader().setBool("smooth_color", m_smooth);
     shader().setFloat("colorRange", m_colorRange);
     shader().setFloat("relaxation", m_relaxation);
-    shader().use();
 }
 
 void Nova::menu()

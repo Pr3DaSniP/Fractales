@@ -13,6 +13,7 @@ Phoenix::Phoenix()
 
 void Phoenix::render()
 {
+    shader().use();
     applyPalette();
     shader().setFloat("maxIter", static_cast<float>(m_iterations));
     shader().setBool("smooth_color", m_smooth);
@@ -20,7 +21,6 @@ void Phoenix::render()
     shader().setFloat("v1", m_v1);
     shader().setFloat("v2", m_v2);
     shader().setFloat("phoenixP", m_p);
-    shader().use();
 }
 
 void Phoenix::menu()
