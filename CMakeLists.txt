@@ -7,6 +7,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(FetchContent)
 
+find_package(Threads REQUIRED)
+
 # ---------------------------------------------------------------------------
 # GLFW (fenêtrage + contexte OpenGL)
 # ---------------------------------------------------------------------------
@@ -97,6 +99,8 @@ add_executable(fractales
     src/core/Screenshot.cpp
     src/core/GifExport.cpp
     src/core/stb_image_write_impl.cpp
+    src/core/NebulabrotGenerator.cpp
+    src/core/NebulabrotView.cpp
     src/fractals/Mandelbrot.cpp
     src/fractals/Julia.cpp
     src/fractals/BurningShip.cpp
@@ -115,6 +119,7 @@ target_link_libraries(fractales PRIVATE
     glfw
     glad_gl_core_41
     imgui
+    Threads::Threads
 )
 
 # Sur Windows, construit l'exécutable comme une application "fenêtrée"

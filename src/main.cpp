@@ -11,6 +11,7 @@
 #include "core/Application.h"
 #include "core/Fractale.h"
 #include "core/GifExport.h"
+#include "core/NebulabrotView.h"
 #include "core/Screenshot.h"
 #include "fractals/BurningShip.h"
 #include "fractals/CelticMandelbrot.h"
@@ -146,6 +147,13 @@ int main()
         PaletteMenu paletteMenu;
         std::string lastExportPath;
 
+        NebulabrotView nebulabrot;
+        bool showNebulabrot = false;
+        int nebulabrotSamplesMillions = 6;
+        int nebulabrotRedMaxIter = 20000;
+        int nebulabrotGreenMaxIter = 2000;
+        int nebulabrotBlueMaxIter = 200;
+
         glfwSetScrollCallback(window, [](GLFWwindow* w, double, double yoffset)
         {
             if (ImGui::GetIO().WantCaptureMouse)
@@ -213,6 +221,8 @@ int main()
             glfwGetFramebufferSize(window, &width, &height);
             glViewport(0, 0, width, height);
 
+            nebulabrot.update();
+
             Shader& activeShader = g_fractales[selectedFractal]->shader();
             activeShader.setInt("width", width);
             activeShader.setInt("height", height);
@@ -245,9 +255,16 @@ int main()
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            glBindVertexArray(vao);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-            glBindVertexArray(0);
+            if (showNebulabrot && nebulabrot.hasImage())
+            {
+                nebulabrot.render(vao);
+            }
+            else
+            {
+                glBindVertexArray(vao);
+                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+                glBindVertexArray(0);
+            }
 
             app.updateFPSCounter(glfwGetTime());
 
@@ -289,7 +306,40 @@ int main()
                 }
             }
 
-            g_fractales[selectedFractal]->render();
+            ImGui::NewLine();
+            ImGui::Separator();
+            ImGui::Text("Nebulabrot (experimental)");
+            ImGui::Checkbox("Afficher le Nebulabrot", &showNebulabrot);
+
+            ImGui::BeginDisabled(nebulabrot.isGenerating());
+            ImGui::SliderInt("Echantillons/canal (M)", &nebulabrotSamplesMillions, 1, 15);
+            ImGui::SliderInt("Iterations (rouge)", &nebulabrotRedMaxIter, 1000, 50000);
+            ImGui::SliderInt("Iterations (vert)", &nebulabrotGreenMaxIter, 100, 5000);
+            ImGui::SliderInt("Iterations (bleu)", &nebulabrotBlueMaxIter, 10, 500);
+
+            if (ImGui::Button("Generer le Nebulabrot"))
+            {
+                nebulabrot.startGenerate(
+                    width, height,
+                    static_cast<long long>(nebulabrotSamplesMillions) * 1000000,
+                    nebulabrotRedMaxIter, nebulabrotGreenMaxIter, nebulabrotBlueMaxIter);
+            }
+            ImGui::EndDisabled();
+
+            if (nebulabrot.isGenerating())
+            {
+                ImGui::ProgressBar(nebulabrot.progress());
+                ImGui::Text("Generation en cours...");
+            }
+            else if (nebulabrot.hasImage())
+            {
+                ImGui::Text("Nebulabrot pret.");
+            }
+
+            if (!showNebulabrot)
+            {
+                g_fractales[selectedFractal]->render();
+            }
 
             app.endFrame();
 
